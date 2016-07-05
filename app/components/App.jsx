@@ -23,6 +23,7 @@ export default class App extends React.Component {
 
   render() {
     const {notes} = this.state;
+    console.log('render');
     return (
       <div>
         <button onClick={this.addNote}>+</button>
@@ -42,6 +43,27 @@ export default class App extends React.Component {
     this.setState({
       notes: this.state.notes.filter((note) => note.id !== id)
     });
-  };
+  }
+
+  componentWillMount() {
+    console.log('will mount');
+  }
+
+  componentDidMount() {
+    console.log('did mount');
+  }
+
+  shouldComponentUpdate() {
+    console.log('should update');
+    return true;
+  }
+
+  componentWillUpdate() {
+    console.log('will update');
+  }
+
+  componentDidUpdate() {
+    console.log('did update');
+  }
 
 }
