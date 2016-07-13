@@ -49,22 +49,21 @@ export default class App extends React.Component {
   }
 
   activateNoteEdit = (id) => {
-    this.setState({
-      notes: this.state.notes.map(note => {
-        if(note.id === id) {
-          note.editing = true;
-        }
-        return note;
-      })
-    });
+    this.updateEditingState(id);
   }
 
   editNote = (id, task) => {
+    this.updateEditingState(id, task, false);
+  }
+
+  updateEditingState = (id, task = null, editing = true) => {
     this.setState({
       notes: this.state.notes.map(note => {
         if(note.id === id) {
-          note.editing = false;
-          note.task = task;
+          note.editing = editing;
+          if(task) {
+            note.task = task;
+          }
         }
         return note;
       })
