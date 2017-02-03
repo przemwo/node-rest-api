@@ -6,7 +6,7 @@ var router = express.Router();
 var Product = require('../models/product');
 
 // Routes
-Product.methods(['get', 'post', 'put', 'delete']);
+Product.methods(['get', 'put', 'post', 'delete']);
 Product.register(router, '/products');
 
 // Return router

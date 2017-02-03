@@ -13,10 +13,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api', require('./routes/api'));
-app.get('/', function(req, res) {
-  res.send('ok');
-});
 
 // Start server
 app.listen(3000);
-console.log('server is running on port 3000');
+console.log('API is running on port 3000');
