@@ -3,12 +3,25 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+
+var port = process.env.PORT || 3003;
 
 // MongoDB
 mongoose.connect('mongodb://localhost/rest_test');
 
 // Express
 var app = express();
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(session({
+  secret: 'somestring',
+  saveUninitialized: true,
+  resave: true
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -41,6 +54,13 @@ app.use(cors());
 // Routes
 app.use('/api', require('./routes/api'));
 
+app.use('/', function(req, res) {
+  res.send('Hello!');
+  console.log(req.cookies);
+  console.log('===================');
+  console.log(req.session);
+});
+
 // Start server
-app.listen(3003);
-console.log('api is running on port 3003');
+app.listen(port);
+console.log('api is running on port ' + port);
