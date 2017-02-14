@@ -54,11 +54,17 @@ app.use(cors());
 // Routes
 app.use('/api', require('./routes/api'));
 
-app.use('/', function(req, res) {
-  res.send('Hello!');
-  console.log(req.cookies);
-  console.log('===================');
+app.use('/', function(req, res, next) {
+  var cookie = req.cookies.someName;
+  if(cookie === undefined) {
+    res.cookie('someName', 123, { maxAge: 5000, httpOnly: true});
+    console.log('Cookie has been set');
+  } else {
+    console.log('Cookie someName value: ' + cookie);
+  }
+  console.log('==============');
   console.log(req.session);
+  res.send('Hello!');
 });
 
 // Start server
