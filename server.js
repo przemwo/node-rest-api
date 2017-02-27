@@ -17,6 +17,8 @@ var port = process.env.PORT || 3003;
 // MongoDB
 mongoose.connect(configDB.url);
 
+require('./config/passport')(passport);
+
 // Express
 var app = express();
 app.use(morgan('dev'));
@@ -28,6 +30,8 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 // app.use(function(req, res, next) {
 //     var oneof = false;
@@ -58,7 +62,7 @@ app.use(cors());
 // Routes
 app.use('/api', require('./routes/api'));
 
-require('./routes/routes.js')(app);
+require('./routes/routes.js')(app, passport);
 
 
 

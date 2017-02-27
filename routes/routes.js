@@ -1,6 +1,6 @@
 var User = require('../models/user');
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
   app.get('/:id?', function(req, res) {
     var newUser = new User();
     console.log(newUser);
@@ -13,7 +13,6 @@ module.exports = function(app) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/profile');
-    });
+      res.redirect('/api/spendings');
+  });
 };
