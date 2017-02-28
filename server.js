@@ -21,7 +21,7 @@ require('./config/passport')(passport);
 
 // Express
 var app = express();
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(session({
   secret: 'somestring',
@@ -61,6 +61,8 @@ app.use(cors());
 
 // Routes
 app.use('/api', require('./routes/api'));
+
+app.use('/books', require('./routes/books'));
 
 require('./routes/routes.js')(app, passport);
 

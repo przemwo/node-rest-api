@@ -33,6 +33,7 @@ module.exports = function(passport) {
             return cb(null, user);
           } else {
             console.log('else!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log(profile);
             var newUser = new User();
             newUser.facebook.id = profile.id;
             newUser.facebook.token = accessToken;

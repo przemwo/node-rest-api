@@ -1,19 +1,32 @@
 var User = require('../models/user');
+var Spendings = require('../models/spendings');
 
 module.exports = function(app, passport) {
   app.get('/profile', isLoggedIn, function(req, res){
+    var result;
       process.nextTick(function() {
         console.log("===============================");
         console.log('user: ', req.user);
         console.log('userId:', req.user.facebook.id);
         console.log("===============================");
-        User.findOne({'facebook.id': req.user.facebook.id}, function(err, user){
-          console.log('dupa');
-          console.log(err);
-          console.log(user);
+        User.find({'facebook.id': req.user.facebook.id}, function(err, user) {
+          console.log('ERR: ', err);
+          console.log('USER: ', user);
+        });
+        User.find({'facebook.id': '1340010649389545'}, function(err, user){
+          console.log('err2: ', err);
+          console.log('user2: ', user);
         });
         console.log("==============================");
-        res.send('Profile!');
+        Spendings.find({'status': 'deleted'}, function(err, spendings){
+          console.log('err3: ', err);
+          console.log('spendings: ', spendings);
+          result = ['test', 'a co'];
+        });
+        console.log("==============================");
+        // res.send('Profile!');
+        console.log('result: ', result);
+        res.json(result);
       });
   	});
 
@@ -29,7 +42,7 @@ module.exports = function(app, passport) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {
-      res.redirect('/api/spendings');
+      res.redirect('/profile');
   });
 };
 
