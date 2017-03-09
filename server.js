@@ -1,5 +1,6 @@
 // Dependencies
 var express = require('express');
+var path = require('path');
 
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
@@ -66,6 +67,10 @@ app.use('/books', require('./routes/books'));
 
 require('./routes/routes.js')(app, passport);
 
+app.use(express.static('./client'));
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, './client/index.html'));
+});
 
 
 // app.use('/', function(req, res, next) {
