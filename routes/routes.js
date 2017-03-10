@@ -2,6 +2,11 @@ var User = require('../models/user');
 var Spendings = require('../models/spendings');
 
 module.exports = function(app, passport) {
+  app.get('/tmp', function(req, res, next){
+    var foo = req.isAuthenticated();
+    res.json({'auth': foo});
+  });
+
   app.get('/profile', isLoggedIn, function(req, res){
     var result;
       process.nextTick(function() {
@@ -37,12 +42,24 @@ module.exports = function(app, passport) {
   //   res.send('Params!');
   // });
 
+  app.get('/login', function(req, res){
+    res.redirect('/auth/facebook');
+  });
+
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
+
   app.get('/auth/facebook', passport.authenticate('facebook'));
 
   app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    passport.authenticate('facebook', {
+      failureRedirect: '/login',
+      // session: false
+    }),
     function(req, res) {
-      res.redirect('/profile');
+      res.redirect('/');
   });
 };
 

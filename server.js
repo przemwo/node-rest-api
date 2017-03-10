@@ -27,7 +27,8 @@ app.use(cookieParser());
 app.use(session({
   secret: 'somestring',
   saveUninitialized: true,
-  resave: true
+  resave: true,
+  cookie: {maxAge: 5000}
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

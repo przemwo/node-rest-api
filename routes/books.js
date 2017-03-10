@@ -4,13 +4,16 @@ var Books = require('../models/book');
 var User = require('../models/user');
 
 router.get('/test', function(req, res){
-  User.getUsers(function(err, users){
-    if(err) {
-      throw err;
-    }
-    res.json(users);
-  })
-  // res.send('testing!');
+  if(req.isAuthenticated()) {
+    User.getUsers(function(err, users){
+      if(err) {
+        throw err;
+      }
+      res.json(users);
+    })
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 router.get('/test/:id', function(req, res){
